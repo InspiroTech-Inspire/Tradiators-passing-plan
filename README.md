@@ -41,5 +41,3 @@ What time does the daily loss reset?
 Is there a minimum number of trading days?
 Are there news, EA, or consistency rules?
 Is the 60 days counted in calendar days?
-
-If you tell me your instrument, average reward-to-risk, rough win rate, and trades per week, I can tighten these risk numbers to your actual edge, or build a tracker spreadsheet with your daily stop, drawdown ladder, and pace line built in.
