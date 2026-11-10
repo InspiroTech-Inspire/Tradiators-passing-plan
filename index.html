@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10K 2-Step Challenge Plan and Tracker</title>
+<style>
+:root{--bg:#15123a;--bg2:#1f1a55;--card:#272168;--line:#3b338f;--ink:#f4f2ff;--mute:#b9b3ee;--p1:#2ee6c5;--p2:#ff5fb7;--amber:#ffc43d;--red:#ff5a5f;--ok:#5dff9a;--ac:var(--p1)}
+body.ph2{--ac:var(--p2)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#3a2a9c 0,transparent 60%),radial-gradient(900px 500px at 100% 0,#7a1f78 0,transparent 55%),var(--bg);color:var(--ink);font:16px/1.6 "Avenir Next","Segoe UI",system-ui,sans-serif;min-height:100vh}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:clamp(28px,5vw,46px);line-height:1.1;margin:8px 0 6px;letter-spacing:-.5px}
+h2{font-size:24px;margin:0 0 6px}
+h3{font-size:17px;margin:0 0 4px}
+p{margin:6px 0;max-width:70ch}
+.sub{color:var(--mute);max-width:62ch}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+nav a{color:var(--ink);text-decoration:none;background:var(--card);border:1px solid var(--line);padding:6px 14px;border-radius:99px;font-size:14px}
+nav a:hover,nav a:focus-visible{border-color:var(--ac);outline:none}
+section{margin-top:38px}
+.card{background:linear-gradient(160deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:18px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.toggle{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:4px;margin:10px 0}
+.toggle button{border:0;background:none;color:var(--mute);font:inherit;font-weight:700;padding:8px 20px;border-radius:99px;cursor:pointer}
+.toggle button.on{color:#10102a;background:var(--ac)}
+button,input,select{font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* runway */
+.runway{margin:26px 4px 8px}
+.track{position:relative;height:26px;border-radius:13px;background:linear-gradient(90deg,#ff5a5f 0,#8e2a5a var(--z),#2a2f7a var(--z),#2ee6c5 100%);overflow:visible}
+.track i{position:absolute;top:-6px;bottom:-6px;width:3px;background:#fff;border-radius:2px}
+.track b{position:absolute;top:-34px;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:var(--mute);font-weight:600}
+.me{position:absolute;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#fff;border:6px solid var(--ac);box-shadow:0 0 0 5px rgba(255,255,255,.15);transition:left .5s}
+.legend{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-top:12px}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:18px}
+.stat{border-radius:14px;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid var(--line)}
+.stat span{display:block;font-size:13px;color:var(--mute)}
+.stat strong{font-size:24px}
+.pos{color:var(--ok)}.neg{color:var(--red)}.warn{color:var(--amber)}
+#alerts{display:grid;gap:8px;margin-top:14px}
+.al{padding:10px 14px;border-radius:12px;font-weight:600;border-left:6px solid}
+.al.ok{background:rgba(93,255,154,.12);border-color:var(--ok)}
+.al.w{background:rgba(255,196,61,.14);border-color:var(--amber)}
+.al.d{background:rgba(255,90,95,.18);border-color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--mute);font-weight:600}
+td.p1{color:var(--p1);font-weight:700}td.p2{color:var(--p2);font-weight:700}
+.scroll{overflow-x:auto}
+.ladder{list-style:none;padding:0;margin:8px 0 0}
+.ladder li{padding:8px 12px;margin:6px 0;border-radius:10px;border-left:6px solid}
+.l1{background:rgba(255,196,61,.12);border-color:var(--amber)}.l2{background:rgba(255,130,60,.14);border-color:#ff8a3c}.l3{background:rgba(255,90,95,.16);border-color:var(--red)}
+.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0 0}
+.steps li{counter-increment:s;position:relative;padding:8px 0 8px 44px}
+.steps li:before{content:counter(s);position:absolute;left:0;top:6px;width:30px;height:30px;border-radius:50%;background:var(--ac);color:#10102a;font-weight:800;display:grid;place-items:center}
+.form{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:10px 0}
+label{display:grid;gap:4px;font-size:13px;color:var(--mute)}
+input,select{background:#120f33;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-width:120px}
+.btn{background:var(--ac);color:#10102a;border:0;font-weight:800;padding:10px 18px;border-radius:10px;cursor:pointer}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.btn.sm{padding:4px 10px;font-size:13px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 0;cursor:pointer}
+.chk input{min-width:0;width:20px;height:20px;accent-color:var(--ac);margin-top:3px}
+.chk input:checked+span{text-decoration:line-through;color:var(--mute)}
+.res{font-size:18px;font-weight:700;margin-top:8px}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:13px;font-weight:700;background:var(--ac);color:#10102a}
+footer{margin-top:50px;color:var(--mute);font-size:14px}
+@media (prefers-reduced-motion:reduce){.me{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<span class="tag">$10K 2-Step Challenge</span>
+<h1>Pass both phases with room to spare</h1>
+<p class="sub">Your rules turned into dollar limits, a pacing plan, and a tracker. Everything you log stays in this browser on this device.</p>
+<nav>
+<a href="#tracker">Tracker</a><a href="#rules">Your rules</a><a href="#risk">Risk limits</a><a href="#p1">Phase 1</a><a href="#p2">Phase 2</a><a href="#habits">Habits</a><a href="#verify">Check first</a><a href="#calc">Lot size</a>
+</nav>
+</header>
+
+<section id="tracker" style="margin-top:10px">
+<div class="card">
+<h2>Live tracker</h2>
+<div class="toggle" role="group" aria-label="Phase">
+<button id="b1" class="on">Phase 1</button><button id="b2">Phase 2</button>
+</div>
+<div class="runway">
+<div class="track" id="track"><i id="zero"></i><b id="lblL"></b><b id="lblZ">$0</b><b id="lblR"></b><div class="me" id="me"></div></div>
+<div class="legend"><span id="lgL"></span><span id="lgR"></span></div>
+</div>
+<div class="stats" id="stats"></div>
+<div id="alerts"></div>
+
+<div class="form">
+<label>Phase start date<input type="date" id="start"></label>
+<label>Date<input type="date" id="d"></label>
+<label>Net profit or loss ($)<input type="number" id="pl" step="0.01" placeholder="-85.50"></label>
+<label>Note<input type="text" id="note" placeholder="optional" maxlength="60"></label>
+<button class="btn" id="add">Save day</button>
+</div>
+<p class="sub">One line per trading day, including floating losses at the worst point of the day if the firm counts equity.</p>
+<div class="scroll"><table><thead><tr><th>Date</th><th>Result</th><th>Running profit</th><th>Note</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="form">
+<button class="btn ghost sm" id="exp">Download backup</button>
+<label style="display:inline-block"><span class="btn ghost sm" style="display:inline-block;cursor:pointer">Restore backup<input type="file" id="imp" accept=".json" hidden></span></label>
+<button class="btn ghost sm" id="clr">Clear this phase</button>
+</div>
+</div>
+</section>
+
+<section id="rules">
+<h2>Your rules in dollars</h2>
+<div class="card scroll"><table>
+<thead><tr><th></th><th>Phase 1</th><th>Phase 2</th></tr></thead>
+<tr><th>Profit target</th><td class="p1">12% = $1,200</td><td class="p2">12% = $1,200</td></tr>
+<tr><th>Max drawdown</th><td class="p1">6% = $600</td><td class="p2">5% = $500</td></tr>
+<tr><th>Daily loss</th><td class="p1">4% = $400</td><td class="p2">3% = $300</td></tr>
+<tr><th>Time limit</th><td class="p1">60 days</td><td class="p2">60 days</td></tr>
+<tr><th>Your finish goal</th><td class="p1">about 30 trading days</td><td class="p2">about 35 trading days</td></tr>
+</table>
+<p>No extras were ticked: no weekend holding, no free swap, one account, $26. Be flat before Friday close every week. The 12% targets keep the price low but they are the hardest option, and Phase 2 has less drawdown to work with.</p></div>
+</section>
+
+<section id="risk">
+<h2>Risk limits that keep you far from the firm’s</h2>
+<div class="grid">
+<div class="card"><h3>Time budget</h3><p>60 days is about 42 trading days. Plan to finish in about 30, so the spare 12 absorb bad weeks and news. That is roughly $40 a day or $200 to $250 a week. If you fall behind, keep the same risk and use the remaining time. Never size up to catch up.</p></div>
+<div class="card"><h3>Per trade</h3><p>Base risk 0.5% ($50). Up to 0.75% only on A+ setups once you’re ahead. At 0.5% you need about 24R of net profit for 12%, which is around 65 to 70 trades at 1:2 reward and a 45% win rate. That is about 1.5 trades a day.</p></div>
+<div class="card"><h3>Daily stop</h3><p><b>Phase 1: -1.5% ($150).</b> <b>Phase 2: -1% ($100).</b> Hit it, close everything, walk away. The firm’s limits sit at $400 and $300, and many firms count open trades, so judge by equity.</p></div>
+</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><h3>Phase 1 drawdown ladder</h3><ul class="ladder"><li class="l1">-2% ($200) from your high: risk drops to 0.25%</li><li class="l3">-4% ($400): stop for the day, review the journal before the next trade</li></ul></div>
+<div class="card"><h3>Phase 2 drawdown ladder</h3><ul class="ladder"><li class="l1">-1.5% ($150) from your high: risk drops to 0.25%</li><li class="l3">-3% ($300): stop for the day, review the journal before the next trade</li></ul></div>
+</div>
+</section>
+
+<section id="p1">
+<h2 style="color:var(--p1)">Phase 1 plan</h2>
+<div class="card"><ol class="steps" style="--ac:var(--p1)">
+<li><b>Weeks 1 to 2.</b> Base risk only. Get to about +2% and confirm the platform’s numbers match your own tracking.</li>
+<li><b>Weeks 3 to 5.</b> If you’re ahead, step up to 0.75% on your best setups. If the drawdown is static from the starting balance, profit adds real cushion.</li>
+<li><b>Final stretch.</b> Within 1.5% of the target, take only A+ setups at base risk. This is where most phases are lost to greed or boredom.</li>
+<li><b>Hit +12%.</b> Stop trading and request Phase 2 right away. No “one more trade” on a passed phase.</li>
+</ol></div>
+</section>
+
+<section id="p2">
+<h2 style="color:var(--p2)">Phase 2 plan</h2>
+<div class="card"><ol class="steps" style="--ac:var(--p2)">
+<li><b>Same strategy, smaller size.</b> Risk 0.4 to 0.5% flat. The target is the same $1,200 but you only have $500 of drawdown.</li>
+<li><b>Daily stop at -1% ($100).</b> The firm’s $300 limit is a third of that, and the margin is the point.</li>
+<li><b>Aim for 35 trading days.</b> It will feel slow. The maths still works and a pass is a pass.</li>
+<li><b>Never lift risk to rush.</b> If you’re behind at day 30 of 60, keep the size and keep the rules.</li>
+</ol></div>
+</section>
+
+<section id="habits">
+<h2>Daily habits</h2>
+<div class="grid">
+<div class="card"><h3>Before trading</h3>
+<label class="chk"><input type="checkbox" data-k="a1"><span>Checked today’s drawdown and daily stop in the tracker</span></label>
+<label class="chk"><input type="checkbox" data-k="a2"><span>Looked at the news calendar and marked no-trade windows</span></label>
+<label class="chk"><input type="checkbox" data-k="a3"><span>Risk per trade set (0.5%, or 0.25% if on the ladder)</span></label>
+<label class="chk"><input type="checkbox" data-k="a4"><span>Friday only: exit time set one hour before close</span></label></div>
+<div class="card"><h3>After trading</h3>
+<label class="chk"><input type="checkbox" data-k="b1"><span>Every trade logged with setup and risk</span></label>
+<label class="chk"><input type="checkbox" data-k="b2"><span>Day result saved above</span></label>
+<label class="chk"><input type="checkbox" data-k="b3"><span>Nothing left open overnight beyond what’s allowed</span></label>
+<label class="chk"><input type="checkbox" data-k="b4"><span>Tomorrow’s plan written down</span></label>
+<button class="btn ghost sm" id="rc">Reset checklist</button></div>
+</div>
+</section>
+
+<section id="verify">
+<h2>Check these in the firm’s rules before you buy</h2>
+<div class="card">
+<label class="chk"><input type="checkbox" data-k="v1"><span>Is drawdown on balance or equity, and static or trailing from your high?</span></label>
+<label class="chk"><input type="checkbox" data-k="v2"><span>What time does the daily loss reset?</span></label>
+<label class="chk"><input type="checkbox" data-k="v3"><span>Is there a minimum number of trading days?</span></label>
+<label class="chk"><input type="checkbox" data-k="v4"><span>Any news, EA, or consistency rules?</span></label>
+<label class="chk"><input type="checkbox" data-k="v5"><span>Is the 60 days counted in calendar days?</span></label>
+<p class="sub">The tracker above assumes a static drawdown measured from the $10,000 starting balance. If yours trails, the cushion from profit disappears and you should tighten the ladder.</p>
+</div>
+</section>
+
+<section id="calc">
+<h2>Lot size calculator</h2>
+<div class="card">
+<div class="form">
+<label>Balance ($)<input type="number" id="cb" value="10000"></label>
+<label>Risk %<input type="number" id="cr" value="0.5" step="0.05"></label>
+<label>Stop distance (points)<input type="number" id="cs" value="20"></label>
+<label>$ per point per 1 lot<input type="number" id="cv" value="10" step="0.01"></label>
+</div>
+<div class="res" id="cres"></div>
+<p class="sub">Use your broker’s contract specs for the last box. Round the lot size down, never up.</p>
+</div>
+</section>
+
+<footer>Not financial advice. The numbers come from the Tradeiators build screen you shared; confirm them on the checkout page. Data is saved in your browser’s local storage and is not sent anywhere.</footer>
+</div>
+
+<script>
+var KEY="propplan.v1";
+var C={1:{t:1200,dd:600,dl:400,stop:150,l1:200,l2:400,fin:30,days:60,n:"Phase 1"},2:{t:1200,dd:500,dl:300,stop:100,l1:150,l2:300,fin:35,days:60,n:"Phase 2"}};
+var S;
+try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}
+if(!S||!S.p1)S={ph:1,p1:{start:"",log:[]},p2:{start:"",log:[]},chk:{}};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function money(n){var s=Math.abs(n).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});return (n<0?"-$":"$")+s}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function weekdays(a,b){var n=0,d=new Date(a+"T00:00:00"),e=new Date(b+"T00:00:00");while(d<=e){var w=d.getDay();if(w!==0&&w!==6)n++;d.setDate(d.getDate()+1)}return n}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e}
+
+function render(){
+  var ph=S.ph,c=C[ph],P=S["p"+ph];
+  document.body.className=ph===2?"ph2":"";
+  $("b1").className=ph===1?"on":"";$("b2").className=ph===2?"on":"";
+  $("start").value=P.start||"";
+  var log=P.log.slice().sort(function(a,b){return a.d<b.d?-1:1});
+  var run=0,peak=0,rows=$("rows");rows.textContent="";
+  log.forEach(function(r){
+    run+=r.pl;if(run>peak)peak=run;
+    var tr=el("tr");
+    tr.appendChild(el("td","",r.d));
+    tr.appendChild(el("td",r.pl<0?"neg":"pos",money(r.pl)));
+    tr.appendChild(el("td","",money(run)));
+    tr.appendChild(el("td","",r.n||""));
+    var td=el("td"),b=el("button","btn ghost sm","Delete");
+    b.onclick=function(){P.log=P.log.filter(function(x){return x!==r&&!(x.d===r.d&&x.pl===r.pl&&x.n===r.n)});save();render()};
+    td.appendChild(b);tr.appendChild(td);rows.appendChild(tr);
+  });
+  if(!log.length){var tr=el("tr"),td=el("td","","No days saved yet. Enter your first result above.");td.colSpan=5;tr.appendChild(td);rows.appendChild(tr)}
+  var profit=run,ddStart=Math.max(0,-profit),ddPeak=peak-profit,eq=10000+profit;
+  var t=today(),todayPL=0;log.forEach(function(r){if(r.d===t)todayPL+=r.pl});
+  // runway
+  var span=c.dd+c.t,z=c.dd/span*100;
+  $("track").style.setProperty("--z",z+"%");
+  $("zero").style.left=z+"%";
+  $("lblZ").style.left=z+"%";
+  var l=$("lblL");l.style.left="0%";l.style.transform="none";l.textContent="Limit "+money(-c.dd);
+  var r2=$("lblR");r2.style.left="100%";r2.style.transform="translateX(-100%)";r2.textContent="Target "+money(c.t);
+  var pos=Math.min(100,Math.max(0,(profit+c.dd)/span*100));
+  $("me").style.left=pos+"%";
+  $("lgL").textContent="Fail zone: below "+money(10000-c.dd)+" equity";
+  $("lgR").textContent="Pass at "+money(10000+c.t)+" equity";
+  // stats
+  var st=$("stats");st.textContent="";
+  function stat(a,b,k){var d=el("div","stat");d.appendChild(el("span","",a));d.appendChild(el("strong",k||"",b));st.appendChild(d)}
+  stat("Equity",money(eq));
+  stat("Profit",money(profit),profit<0?"neg":"pos");
+  stat("Target done",Math.max(0,profit/c.t*100).toFixed(0)+"%");
+  stat("Drawdown used",money(ddStart)+" of "+money(c.dd),ddStart>c.dd*.5?"warn":"");
+  stat("Down from high",money(ddPeak),ddPeak>=c.l1?"warn":"");
+  stat("Today",money(todayPL),todayPL<0?"neg":"");
+  var al=$("alerts");al.textContent="";
+  function a(cls,txt){al.appendChild(el("div","al "+cls,txt))}
+  if(profit>=c.t)a("ok","Target reached. Stop trading and request the next step right now.");
+  if(ddStart>=c.dd)a("d","Drawdown limit breached on your own numbers. Check the platform.");
+  else if(ddStart>=c.dd*.8)a("d","You’re past 80% of the drawdown limit. Trade only if you must, at minimum risk.");
+  if(todayPL<=-c.stop)a("d","Daily stop hit ("+money(-c.stop)+"). Close everything and stop for today.");
+  else if(todayPL<=-c.stop*.66)a("w","Today is at two thirds of your daily stop.");
+  if(ddPeak>=c.l2)a("d","Down "+money(ddPeak)+" from your high. Stop for the day and review the journal.");
+  else if(ddPeak>=c.l1)a("w","Down "+money(ddPeak)+" from your high. Cut risk to 0.25% per trade.");
+  if(P.start){
+    var el1=Math.floor((new Date(t+"T00:00:00")-new Date(P.start+"T00:00:00"))/864e5)+1;
+    var td=Math.max(0,weekdays(P.start,t));
+    var exp=Math.min(c.t,c.t*td/c.fin),diff=profit-exp;
+    if(el1>=1){
+      a(diff>=0?"ok":"w","Day "+el1+" of "+c.days+" ("+Math.max(0,c.days-el1)+" left). Pace line is "+money(exp)+", you are "+(diff>=0?"ahead by ":"behind by ")+money(Math.abs(diff))+". "+(diff<0?"Keep risk the same.":"Good, keep it boring."));
+      if(el1>c.days*.75&&profit<c.t)a("w","You’re in the last quarter of the time limit. Don’t raise risk to chase it.");
+    }
+  }else a("w","Pick the phase start date to turn on the pace line.");
+  if(!al.children.length)a("ok","All clear.");
+  calc();
+}
+
+function calc(){
+  var b=+$("cb").value,r=+$("cr").value,s=+$("cs").value,v=+$("cv").value;
+  var risk=b*r/100,lots=(s>0&&v>0)?risk/(s*v):0;
+  $("cres").textContent="Risk "+money(risk)+" → "+(Math.floor(lots*100)/100).toFixed(2)+" lots";
+}
+["cb","cr","cs","cv"].forEach(function(i){$(i).oninput=calc});
+
+$("b1").onclick=function(){S.ph=1;save();render()};
+$("b2").onclick=function(){S.ph=2;save();render()};
+$("start").onchange=function(){S["p"+S.ph].start=this.value;save();render()};
+$("d").value=today();
+$("add").onclick=function(){
+  var d=$("d").value,v=parseFloat($("pl").value);
+  if(!d||isNaN(v)){alert("Enter a date and a profit or loss amount.");return}
+  var L=S["p"+S.ph].log,f=null;
+  L.forEach(function(x){if(x.d===d)f=x});
+  if(f){f.pl=v;f.n=$("note").value}else L.push({d:d,pl:v,n:$("note").value});
+  $("pl").value="";$("note").value="";save();render();
+};
+$("clr").onclick=function(){if(confirm("Delete all saved days for "+C[S.ph].n+"?")){S["p"+S.ph].log=[];save();render()}};
+$("exp").onclick=function(){
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,2)],{type:"application/json"}));
+  a.download="propplan-backup.json";a.click();
+};
+$("imp").onchange=function(){
+  var f=this.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){try{var o=JSON.parse(r.result);if(!o.p1||!o.p2)throw 0;S=o;save();render();syncChk()}catch(e){alert("That file is not a valid backup.")}};
+  r.readAsText(f);
+};
+function syncChk(){document.querySelectorAll("input[data-k]").forEach(function(c){c.checked=!!S.chk[c.dataset.k]})}
+document.querySelectorAll("input[data-k]").forEach(function(c){c.onchange=function(){S.chk[c.dataset.k]=c.checked;save()}});
+$("rc").onclick=function(){["a1","a2","a3","a4","b1","b2","b3","b4"].forEach(function(k){delete S.chk[k]});save();syncChk()};
+syncChk();render();
+</script>
+</body>
+</html>
